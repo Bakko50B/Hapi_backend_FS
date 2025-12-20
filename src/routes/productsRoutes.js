@@ -1,0 +1,61 @@
+import productsController from '../controllers/productsController.js';
+import authGuard from '../plugins/authGuard.js'; // om du har en sådan
+
+const productsRoutes = [
+  {
+    method: 'GET',
+    path: '/products',
+    options: {
+      pre: [authGuard],
+      handler: productsController.getAll
+    }
+  },
+  {
+    method: 'GET',
+    path: '/products/{id}',
+    options: {
+      pre: [authGuard],
+      handler: productsController.getOne
+    }
+  },
+  {
+    method: 'POST',
+    path: '/products',
+    options: {
+      pre: [authGuard],
+      handler: productsController.create
+    }
+  },
+  {
+    method: 'POST',
+    path: '/products/with-image',
+    options: {
+      pre: [authGuard],
+      payload: {
+        output: 'stream',
+        parse: true,
+        multipart: true,
+        maxBytes: 10 * 1024 * 1024
+      },
+      handler: productsController.createWithImage
+    }
+  },
+  {
+    method: 'PUT',
+    path: '/products/{id}',
+    options: {
+      pre: [authGuard],
+      handler: productsController.update
+    }
+  },
+  {
+    method: 'DELETE',
+    path: '/products/{id}',
+    options: {
+      pre: [authGuard],
+      handler: productsController.remove
+    }
+  }
+];
+
+export default productsRoutes;
