@@ -42,6 +42,20 @@ const productsRoutes = [
   },
   {
     method: 'PUT',
+    path: '/products/{id}/images',
+    options: {
+      pre: [authGuard],
+      payload: {
+        output: 'stream',
+        parse: true,
+        multipart: true,
+        maxBytes: 10 * 1024 * 1024
+      },
+      handler: productsController.uploadImages
+    }
+  },
+  {
+    method: 'PUT',
     path: '/products/{id}',
     options: {
       pre: [authGuard],

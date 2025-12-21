@@ -48,6 +48,21 @@ export const init = async () => {
   server.route(authRoutes);
   server.route(categoryRoutes);
 
+  console.log(
+  server.table().some(r =>
+    r.method === 'put' &&
+    r.path === '/products/{id}/images'
+  )
+    ? "✅ Route /products/{id}/images finns"
+    : "❌ Route /products/{id}/images saknas"
+);
+
+
+
   await server.start();
   console.log(`✅ Hapi server running at: ${server.info.uri}`);
+
+  // console.log("📌 Registered routes:");
+  // console.log(server.table());
+
 };

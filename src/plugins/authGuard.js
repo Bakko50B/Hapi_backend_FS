@@ -2,22 +2,35 @@ import jwt from 'jsonwebtoken';
 
 export default async function authGuard(request, h) {
   try {
-    // ✅ 1. Hoppa över multipart (samma logik som i Fastify)
+    // ✅ 1. Hoppa över multipart (som du redan gör)
     if (request.mime && request.mime.includes('multipart')) {
       return h.continue;
     }
 
-    // ✅ 2. Hämta token från cookies (samma som req.cookies.token)
-    const token = request.state?.token;
+    let token = null;
 
+    // ✅ 2. Försök läsa token från cookie
+    if (request.state?.token) {
+      token = request.state.token;
+    }
+
+    // ✅ 3. Om ingen cookie → försök läsa Authorization-header
+    if (!token) {
+      const authHeader = request.headers.authorization;
+      if (authHeader && authHeader.startsWith("Bearer ")) {
+        token = authHeader.split(" ")[1];
+      }
+    }
+
+    // ✅ 4. Om fortfarande inget token → inte inloggad
     if (!token) {
       return h.response({ error: 'Not logged in' }).code(401).takeover();
     }
 
-    // ✅ 3. Verifiera token (samma som fastify.jwt.verify)
+    // ✅ 5. Verifiera token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // ✅ 4. Lägg decoded user på request (samma som req.user)
+    // ✅ 6. Lägg decoded user på request
     request.user = decoded;
 
     return h.continue;

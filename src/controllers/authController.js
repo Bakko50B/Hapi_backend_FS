@@ -47,7 +47,7 @@ const authController = {
         return h.response({ error: 'Invalid credentials' }).code(401);
       }
 
-      // ✅ Skapa JWT (Hapi har ingen inbyggd jwt-server som Fastify)
+      // ✅ Skapa JWT
       const token = jwt.sign(
         {
           id: user._id,
@@ -57,15 +57,23 @@ const authController = {
         { expiresIn: '1h' }
       );
 
-      // ✅ Sätt cookie (matchar din server.state('token'))
+      // ✅ Sätt cookie (för frontend + Thunder Client)
       h.state('token', token, {
         isHttpOnly: true,
         sameSite: 'Strict',
         path: '/',
-        ttl: 3600 * 1000 // 1 timme i ms
+        ttl: 3600 * 1000
       });
 
-      return h.response({ message: 'Logged in' }).code(200);
+      // ✅ Returnera token i JSON (för Postman)
+      return h.response({
+        message: 'Logged in',
+        token,
+        user: {
+          id: user._id,
+          username: user.username
+        }
+      }).code(200);
 
     } catch (err) {
       console.error('LOGIN ERROR STACK:', err);
