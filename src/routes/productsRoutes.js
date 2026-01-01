@@ -1,12 +1,12 @@
 import productsController from '../controllers/productsController.js';
-import authGuard from '../plugins/authGuard.js'; // om du har en sådan
-
+import authGuard from '../plugins/authGuard.js'; 
 const productsRoutes = [
   {
     method: 'GET',
     path: '/products',
     options: {
-      pre: [authGuard],
+      auth: false,
+      // pre: [authGuard],
       handler: productsController.getAll
     }
   },

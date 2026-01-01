@@ -2,7 +2,7 @@ import Category from '../models/Category.js';
 
 const categoryController = {
 
-  // ✅ GET ALL
+  // GET ALL
   async getAll(request, h) {
     try {
       const categories = await Category.find();
@@ -12,7 +12,7 @@ const categoryController = {
     }
   },
 
-  // ✅ CREATE
+  // CREATE
   async create(request, h) {
     try {
       const { name, description } = request.payload;
@@ -36,7 +36,7 @@ const categoryController = {
     }
   },
 
-  // ✅ GET ONE
+  // GET ONE
   async getOne(request, h) {
     try {
       const category = await Category.findById(request.params.id);
@@ -52,7 +52,7 @@ const categoryController = {
     }
   },
 
-  // ✅ UPDATE
+  // UPDATE
   async update(request, h) {
     try {
       const { name, description } = request.payload;
@@ -86,7 +86,7 @@ const categoryController = {
     }
   },
 
-  // ✅ DELETE
+  // DELETE
   async remove(request, h) {
     try {
       const category = await Category.findByIdAndDelete(request.params.id);

@@ -6,7 +6,7 @@ import Inert from '@hapi/inert';
 import Vision from '@hapi/vision';
 import Cookie from '@hapi/cookie';
 
-// ✅ Importera ALLA routes här
+// Importera ALLA routes här
 import productsRoutes from './routes/productsRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import authRoutes from './routes/authRoutes.js';
@@ -23,46 +23,48 @@ export const init = async () => {
     host: '0.0.0.0',
     routes: {
       cors: {
-        origin: ['*']
+        origin: ['*'],
+        credentials: true
+
       }
     }
   });
 
-  // ✅ Registrera plugins
+  // Registrera plugins
   await server.register([
     Inert,
     Vision,
     Cookie
   ]);
 
-  // ✅ Definiera cookie för authGuard
+  // Definiera cookie för authGuard
   server.state('token', {
     isSecure: false,
     isHttpOnly: true,
     path: '/'
   });
 
-  // ✅ Registrera ALLA routes här
+  // Registrera ALLA routes här
   server.route(productsRoutes);
   server.route(uploadRoutes);
   server.route(authRoutes);
   server.route(categoryRoutes);
 
-  console.log(
-  server.table().some(r =>
-    r.method === 'put' &&
-    r.path === '/products/{id}/images'
-  )
-    ? "✅ Route /products/{id}/images finns"
-    : "❌ Route /products/{id}/images saknas"
-);
+//   console.log(
+//   server.table().some(r =>
+//     r.method === 'put' &&
+//     r.path === '/products/{id}/images'
+//   )
+//     ? "Route /products/{id}/images finns"
+//     : "Route /products/{id}/images saknas"
+// );
 
 
 
   await server.start();
-  console.log(`✅ Hapi server running at: ${server.info.uri}`);
+  console.log(`Hapi server running at: ${server.info.uri}`);
 
-  // console.log("📌 Registered routes:");
+  // console.log("Registered routes:");
   // console.log(server.table());
 
 };

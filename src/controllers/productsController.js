@@ -94,7 +94,7 @@ const productController = {
         return h.response({ error: "Product not found" }).code(404);
       }
 
-      // ✅ Ta bort bilder från Cloudinary
+      // Ta bort bilder från Cloudinary
       for (const url of product.images) {
         try {
           const publicId = url.split("/").slice(-1)[0].split(".")[0];
@@ -114,7 +114,7 @@ const productController = {
     }
   },
 
-  // ✅ Hapi-version av createWithImage
+  // Hapi-version av createWithImage
   async createWithImage(request, h) {
     try {
       const payload = request.payload;
@@ -125,7 +125,7 @@ const productController = {
         return h.response({ error: "Missing product fields" }).code(400);
       }
 
-      // ✅ Hapi: filer ligger direkt i payload
+      // filer ligger direkt i payload
       let files = payload.images || payload.image;
 
       if (!files) {
@@ -203,7 +203,7 @@ const productController = {
         uploadedUrls.push(uploadResult.secure_url);
       }
 
-      // ✅ Lägg till nya bilder i arrayen
+      // Lägg till nya bilder i arrayen
       product.images.push(...uploadedUrls);
       await product.save();
 

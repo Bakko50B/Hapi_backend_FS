@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 const authController = {
 
-  // ✅ REGISTER
+  // REGISTER
   async register(request, h) {
     try {
       const { username, password } = request.payload;
@@ -32,7 +32,7 @@ const authController = {
     }
   },
 
-  // ✅ LOGIN
+  // LOGIN
   async login(request, h) {
     try {
       const { username, password } = request.payload;
@@ -47,7 +47,7 @@ const authController = {
         return h.response({ error: 'Invalid credentials' }).code(401);
       }
 
-      // ✅ Skapa JWT
+      // Skapa JWT
       const token = jwt.sign(
         {
           id: user._id,
@@ -57,7 +57,7 @@ const authController = {
         { expiresIn: '1h' }
       );
 
-      // ✅ Sätt cookie (för frontend + Thunder Client)
+      // Sätt cookie (för frontend + Thunder Client)
       h.state('token', token, {
         isHttpOnly: true,
         sameSite: 'Strict',
@@ -65,7 +65,7 @@ const authController = {
         ttl: 3600 * 1000
       });
 
-      // ✅ Returnera token i JSON (för Postman)
+      // Returnera token i JSON (för Postman)
       return h.response({
         message: 'Logged in',
         token,
@@ -81,7 +81,7 @@ const authController = {
     }
   },
 
-  // ✅ LOGOUT
+  // LOGOUT
   async logout(request, h) {
     h.unstate('token');
     return h.response({ message: 'Logged out' }).code(200);
