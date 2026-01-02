@@ -1,5 +1,5 @@
 import productsController from '../controllers/productsController.js';
-import authGuard from '../plugins/authGuard.js'; 
+import authGuard from '../plugins/authGuard.js';
 const productsRoutes = [
   {
     method: 'GET',
@@ -69,6 +69,11 @@ const productsRoutes = [
       pre: [authGuard],
       handler: productsController.remove
     }
+  },
+  {
+    method: 'DELETE',
+    path: '/products/{id}/images/{publicId}',
+    handler: productsController.removeImage
   }
 ];
 

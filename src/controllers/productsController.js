@@ -213,9 +213,34 @@ const productController = {
       console.error("Error in uploadImages:", err);
       return h.response({ error: "Failed to upload images" }).code(500);
     }
+  },
+  async removeImage(request, h) {
+    try {
+      const { id, publicId } = request.params;
+
+      const product = await Product.findById(id);
+      if (!product) {
+        return h.response({ error: "Product not found" }).code(404);
+      }
+
+      // Ta bort från Cloudinary
+      try {
+        await cloudinary.uploader.destroy(`products/${publicId}`);
+      } catch (err) {
+        console.warn("Cloudinary delete failed:", err);
+      }
+
+      // Ta bort från produktens images-array
+      product.images = product.images.filter(img => !img.includes(publicId));
+      await product.save();
+
+      return h.response(product).code(200);
+
+    } catch (err) {
+      console.error("Error in removeImage:", err);
+      return h.response({ error: "Failed to delete image" }).code(500);
+    }
   }
-
-
 };
 
 export default productController;

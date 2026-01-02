@@ -1,10 +1,14 @@
 import authController from '../controllers/authController.js';
+import authGuard from '../plugins/authGuard.js';
 
 const authRoutes = [
   {
     method: 'POST',
     path: '/auth/register',
-    handler: authController.register
+    options: {
+      pre: [authGuard],
+      handler: authController.register
+    }
   },
   {
     method: 'POST',
