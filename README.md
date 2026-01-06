@@ -54,7 +54,7 @@ API:et använder JWT som lagras i en httpOnly-cookie. Webbläsaren skickar cooki
 
 | Metod | Endpoint       | Skyddad | Beskrivning                        |
 |-------|----------------|---------|-------------------------------------|
-| POST  | /auth/register | Nej     | Skapar ny användare                 |
+| POST  | /auth/register | Ja      | Skapar ny användare                 |
 | POST  | /auth/login    | Nej     | Loggar in och sätter httpOnly-cookie |
 | POST  | /auth/logout   | Nej     | Loggar ut och rensar cookie         |
 
@@ -110,8 +110,8 @@ npm install
 ## ENVfil (typ)
 
 ```env
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/lager
+
+MONGO_URI=mongodb://url till databas
 JWT_SECRET=hemligt
 CLOUDINARY_NAME=din_cloudinary_cloud
 CLOUDINARY_API_KEY=din_api_key
