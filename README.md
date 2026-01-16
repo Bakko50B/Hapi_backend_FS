@@ -77,7 +77,7 @@ API:et använder JWT som lagras i en httpOnly-cookie. Webbläsaren skickar cooki
 | Metod | Endpoint                          | Skyddad | Beskrivning                       |
 |-------|-----------------------------------|---------|------------------------------------|
 | GET   | /products                         | Nej     | Hämtar alla produkter              |
-| GET   | /products/{id}                    | Nej     | Hämtar en produkt                  |
+| GET   | /products/{id}                    | Ja      | Hämtar en produkt                  |
 | POST  | /products                         | Ja      | Skapar produkt                     |
 | POST  | /products/with-image              | Ja      | Skapar produkt med bild            |
 | PUT   | /products/{id}/images             | Ja      | Lägger till bilder till produkt    |
