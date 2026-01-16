@@ -10,7 +10,7 @@ const uploadController = {
         return h.response({ error: 'No file uploaded' }).code(400);
       }
 
-      //Ladda upp till Cloudinary (motsvarar file.file.pipe(uploadStream))
+      //Ladda upp till Cloudinary 
       const result = await new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
           { folder: 'products' },

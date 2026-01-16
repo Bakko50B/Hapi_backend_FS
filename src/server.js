@@ -6,7 +6,7 @@ import Inert from '@hapi/inert';
 import Vision from '@hapi/vision';
 import Cookie from '@hapi/cookie';
 
-// Importera ALLA routes här
+// Importera ALLA routes 
 import productsRoutes from './routes/productsRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import authRoutes from './routes/authRoutes.js';
@@ -44,12 +44,13 @@ export const init = async () => {
     path: '/'
   });
 
-  // Registrera ALLA routes här
+  // Registrera ALLA routes 
   server.route(productsRoutes);
   server.route(uploadRoutes);
   server.route(authRoutes);
   server.route(categoryRoutes);
 
+// Testutskrift till konsollen
 //   console.log(
 //   server.table().some(r =>
 //     r.method === 'put' &&
