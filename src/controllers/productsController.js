@@ -97,6 +97,7 @@ const productController = {
       // Ta bort bilder från Cloudinary
       for (const url of product.images) {
         try {
+          // Extrahera Cloudinary publicId från bildens URL
           const publicId = url.split("/").slice(-1)[0].split(".")[0];
           await cloudinary.uploader.destroy(`products/${publicId}`);
         } catch (err) {
@@ -114,7 +115,7 @@ const productController = {
     }
   },
 
-  // Hapi-version av createWithImage
+ 
   async createWithImage(request, h) {
     try {
       const payload = request.payload;
@@ -142,6 +143,7 @@ const productController = {
         const fileStream = file._data;
 
         const uploadResult = await new Promise((resolve, reject) => {
+          // Ladda upp filen via Cloudinarys upload_stream (krävs för buffer-data)
           const uploadStream = cloudinary.uploader.upload_stream(
             { folder: "products" },
             (error, result) => (error ? reject(error) : resolve(result))
